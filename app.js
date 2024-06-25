@@ -30,7 +30,8 @@ app.use(authRoutes);
 db.connectToDatabase()
   .then(function () {
     app.listen(3000);
-    console.log("server is running and database connected");
+    // console.log("server is running and database connected");
+    // testing localdwdsadwdasdasdw
   })
   .catch(function (error) {
     console.log("failed connecting to database");
