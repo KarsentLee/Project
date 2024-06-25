@@ -9,8 +9,11 @@
   "author": "Sunjae Lee",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "csurf": "^1.11.0",
     "ejs": "^3.1.10",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "mongodb": "^6.7.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.3"
