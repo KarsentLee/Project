@@ -1,4 +1,5 @@
 const express = require("express");
+const expressSession = require("express-session");
 const csrf = require("csurf");
 const path = require("path");
 const authRoutes = require("./routes/auth.routes");
@@ -6,6 +7,8 @@ const db = require("./data/database");
 const addCsrfTokenMiddleware = require("./middleware/csrf-token");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 const csurf = require("csurf");
+const createSessionConfig = require("./config/session");
+
 const app = express();
 
 // will use ejs-type files in the views folder
@@ -15,6 +18,10 @@ app.set("views", path.join(__dirname, "views"));
 // all css files are stored in public folder
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
+
+// create a session
+const sessionConfig = createSessionConfig();
+app.use(expressSession(sessionConfig));
 
 //  to prevent csrf attack
 app.use(csrf());
