@@ -6,6 +6,7 @@ const db = require("../data/database");
 
 class User {
   // use this constructor to create a user document with user input values
+  // note that this constructor is the schema of user document
   constructor(email, password, fullname, street, postal, city) {
     this.email = email;
     this.password = password;
