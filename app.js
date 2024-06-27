@@ -2,7 +2,11 @@ const express = require("express");
 const expressSession = require("express-session");
 const csrf = require("csurf");
 const path = require("path");
+
 const authRoutes = require("./routes/auth.routes");
+const productRoutes = require("./routes/products.routes");
+const baseRoutes = require("./routes/base.routes");
+
 const db = require("./data/database");
 const addCsrfTokenMiddleware = require("./middleware/csrf-token");
 const errorHandlerMiddleware = require("./middleware/error-handler");
@@ -31,7 +35,9 @@ app.use(addCsrfTokenMiddleware);
 app.use(errorHandlerMiddleware);
 
 //  routes
+app.use(baseRoutes);
 app.use(authRoutes);
+app.use(productRoutes);
 
 //  should connect to database when the server starts
 db.connectToDatabase()
