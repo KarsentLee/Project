@@ -10,7 +10,9 @@ const baseRoutes = require("./routes/base.routes");
 const db = require("./data/database");
 const addCsrfTokenMiddleware = require("./middleware/csrf-token");
 const errorHandlerMiddleware = require("./middleware/error-handler");
-const csurf = require("csurf");
+const checkAuthStatus = require("./middleware/check-auth");
+
+// const csurf = require("csurf");
 const createSessionConfig = require("./config/session");
 
 const app = express();
@@ -26,6 +28,8 @@ app.use(express.urlencoded({ extended: false }));
 // create a session
 const sessionConfig = createSessionConfig();
 app.use(expressSession(sessionConfig));
+
+app.use(checkAuthStatus);
 
 //  to prevent csrf attack
 app.use(csrf());
