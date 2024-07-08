@@ -1,16 +1,39 @@
 const authUtill = require("../util/authentication");
 const validation = require("../util/validation");
-
+const sessionFlash = require("../util/session-flash");
 const User = require("../models/user.model");
 
 // this function is called when the user tries to access "/signup" page
 function getSignup(req, res, next) {
-  res.render("customer/auth/signup");
+  let sessionData = sessionFlash.getSessionData(req);
+
+  if (!sessionData) {
+    sessionData = {
+      email: "",
+      confirmEmail: "",
+      password: "",
+      fullname: "",
+      street: "",
+      postal: "",
+      city: "",
+    };
+  }
+  res.render("customer/auth/signup", { inputData: sessionData });
 }
 
 // this function is called when the user tries to create an account from "/signup" page after putting required values
 // the function then creates a user document with the values and redirect to "/login" page
 async function signup(req, res, next) {
+  const enteredData = {
+    email: req.body.email,
+    confirmEmail: req.body["confirm-email"],
+    password: req.body.password,
+    fullname: req.body.fullname,
+    street: req.body.street,
+    postal: req.body.postal,
+    city: req.body.city,
+  };
+
   const user = new User(
     req.body.email,
     req.body.password,
@@ -32,7 +55,16 @@ async function signup(req, res, next) {
     ) ||
     !validation.emailIsConfirmed(req.body.email, req.body["confirm-email"])
   ) {
-    res.redirect("/signup");
+    sessionFlash.flashedDataToSession(
+      req,
+      {
+        errorMessage: "check your input, you must type correct values",
+        ...enteredData,
+      },
+      function () {
+        res.redirect("/signup");
+      }
+    );
     return;
   }
   //
@@ -42,7 +74,18 @@ async function signup(req, res, next) {
     const existsAlready = await user.existsAlready();
 
     if (existsAlready) {
-      res.redirect("/signup");
+      sessionFlash.flashedDataToSession(
+        req,
+        {
+          errorMessage:
+            "user with the same email exists already, try another email address",
+          ...enteredData,
+        },
+        function () {
+          res.redirect("/signup");
+        }
+      );
+
       return;
     }
     await user.signup();
@@ -57,7 +100,15 @@ async function signup(req, res, next) {
 //
 
 function getLogin(req, res, next) {
-  res.render("customer/auth/login");
+  let sessionData = sessionFlash.getSessionData(req);
+
+  if (!sessionData) {
+    sessionData = {
+      email: "",
+      password: "",
+    };
+  }
+  res.render("customer/auth/login", { inputData: sessionData });
 }
 //
 
@@ -72,8 +123,16 @@ async function login(req, res, next) {
     return;
   }
 
+  const sessionErrorData = {
+    errorMessage: "either your email or password is wrong, please double check",
+    email: user.email,
+    password: user.password,
+  };
+
   if (!existingUser) {
-    res.redirect("/login");
+    sessionFlash.flashedDataToSession(req, sessionErrorData, function () {
+      res.redirect("/login");
+    });
     return;
   }
 
@@ -82,7 +141,9 @@ async function login(req, res, next) {
   );
 
   if (!passwordIsCorrect) {
-    res.redirect("/login");
+    sessionFlash.flashedDataToSession(req, sessionErrorData, function () {
+      res.redirect("/login");
+    });
     console.log("failed typing correct pswrd");
     return;
   }

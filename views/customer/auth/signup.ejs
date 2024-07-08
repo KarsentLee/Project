@@ -6,17 +6,24 @@
     <%- include('../../shared/includes/header') %>
     <main>
       <h1>Create New Account</h1>
+      <% if(inputData.errorMessage) { %>
+          <section class="alert">
+            <h2>invalid input</h2>
+            <p><%= inputData.errorMessage %></p>
+          </section>
+      <% } %>
       <form action="/signup" method="POST">
         <input type='hidden' id='' name='_csrf' value = '<%= locals.csrfToken%>'>
         <p>
           <label for="email">Email</label>
-          <input type="email" name="email" id="email" required />
+          <input type="email" name="email" value="<%= inputData.email %>" id="email" required />
         </p>
         <p>
           <label for="confirm-email">Confirm Email</label>
           <input
             type="email"
             name="confirm-email"
+            value="<%=inputData.confirmEmail %>"
             id="confirm-email"
             required
           />
@@ -26,6 +33,7 @@
           <input
             type="password"
             name="password"
+            value="<%=inputData.password %>"
             id="password"
             minlength="6"
             required
@@ -34,19 +42,19 @@
         <hr />
         <p>
           <label for="fullname">Full Name</label>
-          <input type="text" name="fullname" id="fullname" required />
+          <input type="text" name="fullname"  value="<%=inputData.fullname %>" id="fullname" required />
         </p>
         <p>
           <label for="street">Street</label>
-          <input type="text" name="street" id="street" required />
+          <input type="text" name="street"  value="<%=inputData.street %>" id="street" required />
         </p>
         <p>
           <label for="postal">Postal Code</label>
-          <input type="text" name="postal" id="postal" required />
+          <input type="text" name="postal"  value="<%=inputData.postal %>" id="postal" required />
         </p>
         <p>
           <label for="city">City</label>
-          <input type="text" name="city" id="city" required />
+          <input type="text" name="city"  value="<%=inputData.city %>" id="city" required />
         </p>
         <button class="btn">Create Account</button>
         <p id="switch-form"><a href="/login">Login instead</a></p>
