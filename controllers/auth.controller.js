@@ -148,6 +148,7 @@ async function login(req, res, next) {
     return;
   }
 
+  // this creates a session based on the user's info
   authUtill.createUserSession(req, existingUser, function () {
     res.redirect("/");
   });
