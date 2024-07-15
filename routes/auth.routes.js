@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const authController = require("../controllers/auth.controller");
-
+// dd
 // call controllers appropriately
 router.get("/signup", authController.getSignup);
 router.get("/login", authController.getLogin);
