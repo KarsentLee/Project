@@ -24,6 +24,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // all css files are stored in public folder
 app.use(express.static("public"));
+app.use("/products/assets", express.static("product-data"));
 app.use(express.urlencoded({ extended: false }));
 
 // create a session
