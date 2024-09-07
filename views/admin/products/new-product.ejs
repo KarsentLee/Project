@@ -1,0 +1,15 @@
+<%- include('../../shared/includes/head', {pageTitle: "All Products"}) %>
+</head>
+  <body>
+    <%- include('../../shared/includes/header') %>
+    <main>
+        <h1>Add new product</h1>
+        <%- include('includes/product-form', {submitPath: '/admin/products', product: {
+            title: "",
+            summary: "",
+            price: "",
+            description: ""
+        }}) %>
+        
+    </main>
+<%- include('../../shared/includes/footer') %>
