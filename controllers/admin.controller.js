@@ -2,7 +2,7 @@ const Product = require("../models/product.model");
 
 async function getProducts(req, res, next) {
   try {
-    console.log("called");
+    
     const products = await Product.findAll();
     res.render("admin/products/all-products", { products: products });
   } catch (error) {
