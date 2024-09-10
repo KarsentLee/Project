@@ -144,7 +144,6 @@ async function login(req, res, next) {
     sessionFlash.flashedDataToSession(req, sessionErrorData, function () {
       res.redirect("/login");
     });
-    console.log("failed typing correct pswrd");
     return;
   }
 
