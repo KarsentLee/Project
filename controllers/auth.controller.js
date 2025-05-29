@@ -21,6 +21,7 @@ function getSignup(req, res, next) {
   res.render("customer/auth/signup", { inputData: sessionData });
 }
 
+
 // this function is called when the user tries to create an account from "/signup" page after putting required values
 // the function then creates a user document with the values and redirect to "/login" page
 async function signup(req, res, next) {
@@ -153,14 +154,13 @@ async function login(req, res, next) {
     res.redirect("/");
   });
 }
-//
+
 
 function logout(req, res) {
   authUtill.destroyUserAuthSession(req);
   res.redirect("/login");
 }
 
-//
 module.exports = {
   getSignup: getSignup,
   getLogin: getLogin,
