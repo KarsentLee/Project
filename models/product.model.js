@@ -15,11 +15,9 @@ class Product {
   }
 
   static async findById(productId) {
-    console.log("in findbyId func: ", productId);
     let prodId;
     try {
       prodId = new mongodb.ObjectId(productId);
-      console.log("lets see if mongodb object id conversion works: ", prodId);
     } catch (error) {
       error.code = 404;
       throw error;
@@ -62,9 +60,7 @@ class Product {
     };
 
     if (this.id) {
-      console.log("this id: ", this.id);
       const productId = new mongodb.ObjectId(this.id);
-      console.log(productId);
 
       if (!this.image) {
         delete productData.image;
