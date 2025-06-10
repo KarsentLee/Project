@@ -29,11 +29,12 @@ function updateCartItem(req, res) {
     req.body.productId,
     req.body.quantity
   );
+  console.log(updatedItemData);
   req.session.cart = cart;
 
   res.json({
     message: "item updated",
-    updateCartData: {
+    updatedCartData: {
       newTotalQuantity: cart.totalQuantity,
       newTotalPrice: cart.totalPrice,
       updatedItemPrice: updatedItemData.updatedItemPrice,

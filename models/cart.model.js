@@ -31,6 +31,8 @@ class Cart {
   }
 
   updateItem(productId, newQuantity) {
+    console.log(productId, newQuantity);
+    console.log("updating item");
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i];
       if (item.product.id === productId && newQuantity > 0) {
@@ -42,11 +44,13 @@ class Cart {
 
         this.totalQuantity = this.totalQuantity + quantityChange;
         this.totalPrice += item.product.price * quantityChange;
+
         return { updatedItemPrice: cartItem.totalPrice };
       } else if (item.product.id === productId && newQuantity <= 0) {
         this.items.splice(i, 1);
         this.totalQuantity = this.totalQuantity - item.quantity;
         this.totalPrice -= item.totalPrice;
+
         return { updatedItemPrice: 0 };
       }
     }
