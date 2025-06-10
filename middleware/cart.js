@@ -6,10 +6,11 @@ function initializeCart(req, res, next) {
   if (!req.session.cart) {
     cart = new Cart();
   } else {
+    const sessionCart = req.session.cart;
     cart = new Cart(
-      req.session.cart.items,
-      req.session.cart.items.totalQuantity,
-      req.session.cart.totalPrice
+      sessionCart.items,
+      sessionCart.totalQuantity,
+      sessionCart.totalPrice
     );
   }
 
@@ -17,5 +18,6 @@ function initializeCart(req, res, next) {
 
   next();
 }
+
 
 module.exports = initializeCart;
